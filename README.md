@@ -125,6 +125,10 @@ sudo nano /etc/apache2/apache2.conf
 * Inserir linha **Include /etc/phpmyadmin/apache.conf**
 ![Ubuntu10](https://github.com/user-attachments/assets/2612986c-c502-4a5d-aa4f-b0e123f4dd99)
 
+* Atualize o servidor
+```bash
+sudo systemctl restart apache2
+```
 
 
 ## Firewall
