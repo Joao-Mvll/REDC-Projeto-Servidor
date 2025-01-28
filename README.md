@@ -9,6 +9,8 @@ do Instituto Federal de São Paulo de São João da Boa Vista
 * Ubuntu Desktop 24.10 LTS
 * Mysql
 * MyPhp
+* Apache2
+* PHP 8.3.6
 
 ## Funcionalidades
 
