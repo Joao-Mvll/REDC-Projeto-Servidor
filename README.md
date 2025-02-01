@@ -153,4 +153,4 @@ sudo ufw allow (nome da aplicação)
 sudo ufw allow in "Apache Full"
 ```
 
-# Configurando o servidor
+## Moodle
