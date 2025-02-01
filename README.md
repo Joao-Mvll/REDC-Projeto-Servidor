@@ -75,7 +75,7 @@ sudo apt-get install mysql-server
 ```bash
 sudo mysql_secure_installation
 ```
-* nivel de seguraça **1**
+* nivel de segurança **1**
 * **y**
 * **n**
 * **y**
@@ -154,3 +154,183 @@ sudo ufw allow in "Apache Full"
 ```
 
 ## Moodle
+
+### Pré requisitos:
+
+* Linux Ubuntu Server 22.04.3 LTS (https://ubuntu.com/download/server)
+* Oracle Virtual BOX 7.0 (https://www.virtualbox.org/wiki/Downloads)
+* Putty 0,79 (https://www.putty.org/)
+
+### INSTALAÇÃO DO SOFTWARE
+
+* Instalação de pacotes para apache, mysql e php (faça linha por linha em sequencia):
+```bash
+sudo apt install apache2 mysql-client mysql-server php libapache2-mod-php graphviz aspell
+sudo apt install apache2 ghostscript php-pspell php-curl php-gd php-intl php-mysql php-xml
+sudo apt install apache2 php-xmlrpc php-ldap php-zip php-soap php-zip php-mysqli
+sudo apt install apache2 php-mbstring
+```
+
+* Quando perguntado, responda sim:
+  Deseja continuar? [S/n] (Enter)
+
+### WEB SERVER (APACHE2) SETUP
+
+* Altere the php.ini file:
+```bash
+sudo nano /etc/php/8.1/apache2/php.ini
+```
+● Remova o comentário (ponto e vírgula ;) da linha: max_input_vars
+● Incremente o tamanho para max_input_vars to igual ou acima de 5000
+● Localize upload_max_filesize e mude o valor para = 200M
+● Remova o comentário (ponto e vírgula ;) da linha: extension=curl
+● Remova o comentário (ponto e vírgula ;) da linha: extension=gd
+● Remova o comentário (ponto e vírgula ;) da linha: extension=intl
+● Remova o comentário (ponto e vírgula ;) da linha: extension=mbstring
+● Remova o comentário (ponto e vírgula ;) da linha: extension=mysqli
+
+* pode existir algumas linhas com “extension=curl”, descomente somente a que estiver próxima ao grupo de
+várias extensions. Exemplo, junto com gd,intl,mbstring e mysqli que você deverá reomover “;”.
+
+* Reinicialize o servidor Web:
+```bash
+sudo service apache2 restart
+```
+
+* Cheque o funcionamento do web server:
+* Carregue o Firefox local com http://localhost ou remotamente com o endereço ip do seu servidor
+//http://seu_ip_servidor. Exemplo, http://192.168.15.201 .
+
+* Nota: Se estiver funcional seu servidor Apache e php configurado, deverá aparecer uma tela como essa, confirmando funcionamento.
+
+
+### DOWNLOAD MOODLE
+
+* Download da última versão Moodle deste tutorial (Linux):
+wget https://download.moodle.org/download.php/direct/stable403/moodle-4.3.tgz
+
+* Descomprima arquivo, já enviando para diretório de instalação Moodle com:
+tar xvzf moodle-4.3.tgz --directory /var/www/html/
+
+### MYSQL CONFIGURAÇÃO
+
+* Inicialize mysql:
+```bash
+sudo service mysql start
+```
+
+* Execute root mysql:
+```bash
+sudo mysql -u root -p
+```
+Enter password (‘senha123’)
+
+* Crie tabela base do moodle:
+```bash
+CREATE DATABASE moodle DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```
+
+* Crie usuário base do Moodle:
+```bash
+create user 'moodleuser'@'localhost' IDENTIFIED BY 'mateus';
+```
+
+* Assegure permissões no banco de dados:
+```bash
+GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,CREATE TEMPORARY TABLES,DROP,INDEX,ALTER ON moodle.* TO 'moodleuser'@'localhost';
+```
+
+Saia do mysql:
+```bash
+quit;
+```
+
+### WEB SERVER PERMISSÕES
+
+* Dê permissão ao web server:
+```bash
+sudo chown -R www-data /var/www
+```
+```bash
+sudo chmod -R 755 /var/www
+```
+
+* Crie diretório para base de dados do Moodle:
+```bash
+sudo mkdir /var/moodledata
+```
+
+* Assegure permissões aos diretórios do Moodle:
+```bash
+sudo chown -R www-data /var/moodledata
+```
+```bash
+sudo chmod -R 777 /var/moodledata
+```
+```bash
+sudo chmod -R 0755 /var/www/html/moodle
+```
+
+* Reinicialize o web server:
+```bash
+sudo service apache2 restart
+```
+
+### MOODLE INSTALAÇÃO
+
+1. Firefox, vá até: http://localhost/moodle ou remotamente com o endereço ip do seu servidor
+//http://seu_ip_servidor/moodle. Exemplo, http://192.168.15.201/moodle
+
+2. Language: pt_br (NEXT ou PRÓXIMO)
+
+3. Confirme Diretórios:
+Endereço web server = http://localhost/moodle ,ou como o exemplo,
+http://192.168.15.201/moodle
+Moodle diretorio = /var/www/html/moodle
+Banco de dados = /var/moodledata
+(PRÓXIMO)
+
+4. Escolha driver de banco de dados: Tipo: Improved MySQL (native/mysqli)
+(PRÓXIMO)
+
+5. Configuração do banco de dados:
+host: localhost
+database name: moodle
+database user: moodleuser
+database password: andre
+(PRÓXIMO)
+
+6. Notas de direitos autorais: Leia
+(CONTINUAR)
+
+7. Verificação do Servidor: (Tudo deve estar verde ‘ok’ - Você pode receber um aviso sobre HTTPS que é
+esperado para isso por ser máquina local)
+(CONTINUAR)
+
+● O sistema será então instalado – isso pode levar alguns minutos, seja paciente. Você saberá quando terminar,
+pois será solicitado: ‘CONTINUAR’.
+
+8. Configure sua conta de administrador principal.
+EXEMPLO:
+Identificação de usuário: admin
+Escolha método de autenticação: Contas Manuais
+Nova senha: Senha123
+Nome: Mateus
+Sobrenome: Silva
+Endereço de Email: mateus@moodle.org
+Visibilidade de e-mail: oculto
+*preencha com seus dados os restante dos campos
+** mude usuários, email´s e senhas, para seu gosto
+(ATUALIZAR PERFIL)
+
+9. Instalação – Configurações da página principal.
+EXEMPLO:
+Nome completo do site: MOODLE 4.3 SERVER – Mateus Silva
+Nome Breve do site: MOODLE SERVER
+Descrição da página principal: Deixe em branco.
+Parametrização de local: São João da Boa Vista/São Paulo
+Gerenciar autenticação: Desabilitar
+Conta para suporte técnico: mateus@moodle.org
+Configuração de saída de e-mail: Deixe em branco
+(SALVAR MUDANÇAS)
+Concluído - A página do painel é carregada para o usuário administrador:
