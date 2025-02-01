@@ -166,10 +166,17 @@ sudo ufw allow in "Apache Full"
 * Instalação de pacotes para apache, mysql e php (faça linha por linha em sequencia):
 ```bash
 sudo apt install apache2 mysql-client mysql-server php libapache2-mod-php graphviz aspell
+```
+```bash
 sudo apt install apache2 ghostscript php-pspell php-curl php-gd php-intl php-mysql php-xml
+```
+```bash
 sudo apt install apache2 php-xmlrpc php-ldap php-zip php-soap php-zip php-mysqli
+```
+```bash
 sudo apt install apache2 php-mbstring
 ```
+
 
 * Quando perguntado, responda sim:
   Deseja continuar? [S/n] (Enter)
@@ -180,14 +187,14 @@ sudo apt install apache2 php-mbstring
 ```bash
 sudo nano /etc/php/8.1/apache2/php.ini
 ```
-● Remova o comentário (ponto e vírgula ;) da linha: max_input_vars
-● Incremente o tamanho para max_input_vars to igual ou acima de 5000
-● Localize upload_max_filesize e mude o valor para = 200M
-● Remova o comentário (ponto e vírgula ;) da linha: extension=curl
-● Remova o comentário (ponto e vírgula ;) da linha: extension=gd
-● Remova o comentário (ponto e vírgula ;) da linha: extension=intl
-● Remova o comentário (ponto e vírgula ;) da linha: extension=mbstring
-● Remova o comentário (ponto e vírgula ;) da linha: extension=mysqli
+- Remova o comentário (ponto e vírgula ;) da linha: max_input_vars
+- Incremente o tamanho para max_input_vars to igual ou acima de 5000
+- Localize upload_max_filesize e mude o valor para = 200M
+- Remova o comentário (ponto e vírgula ;) da linha: extension=curl
+- Remova o comentário (ponto e vírgula ;) da linha: extension=gd
+- Remova o comentário (ponto e vírgula ;) da linha: extension=intl
+- Remova o comentário (ponto e vírgula ;) da linha: extension=mbstring
+- Remova o comentário (ponto e vírgula ;) da linha: extension=mysqli
 
 * pode existir algumas linhas com “extension=curl”, descomente somente a que estiver próxima ao grupo de
 várias extensions. Exemplo, junto com gd,intl,mbstring e mysqli que você deverá reomover “;”.
