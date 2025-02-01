@@ -340,4 +340,3 @@ Gerenciar autenticação: Desabilitar
 Conta para suporte técnico: mateus@moodle.org
 Configuração de saída de e-mail: Deixe em branco
 (SALVAR MUDANÇAS)
-Concluído - A página do painel é carregada para o usuário administrador:
