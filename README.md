@@ -3,6 +3,11 @@
 Projeto desenvolvido para a matéria de SBVREDC - Redes de Computadores (Bacharelado em Ciência da Computação)
 do Instituto Federal de São Paulo de São João da Boa Vista
 
+## Video
+
+[![Thumbnail do vídeo](https://img.youtube.com/vi/XopkurZbivE/maxresdefault.jpg)](https://www.youtube.com/watch?v=XopkurZbivE)
+
+
 ## Tecnologias Utilizadas
 
 * Oracle Virtual Machine
